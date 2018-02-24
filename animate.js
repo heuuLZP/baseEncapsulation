@@ -1,4 +1,4 @@
-import cssHandle from './cssHandle.js'
+import cssHandle from './css'
 
 /** 
  * 
@@ -28,6 +28,9 @@ export default function animate(obj,json,fn){
                 case "zIndex":
                     icur = cssHandle.getStyle(obj,'z-index')
                     break;
+                case "scrollTop":
+                    icur = obj.scrollTop
+                    break;
                 default:
                 icur=parseInt(cssHandle.getStyle(obj,attr));
             }
@@ -51,6 +54,10 @@ export default function animate(obj,json,fn){
                 cssHandle.setStyle(obj, attr, json[attr])
             } else if(attr=='zIndex'){
                 cssHandle.setStyle(obj, 'z-index', json[attr])
+            } else if(attr=='scrollTop'){
+                obj.scrollTop = icur+speed
+                console.log(obj.scrollTop);
+                
             } else {
                 cssHandle.setStyle(obj, attr, icur+speed+'px')
             } 
