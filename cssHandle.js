@@ -47,6 +47,7 @@ class CSSHandle {
 				// if(style === "float"){
 				// 	return win.getComputedStyle(elem, null).getPropertyValue("cssFloat");
 				// }
+				
 				return window.getComputedStyle(elem, null).getPropertyValue(style);
 
 			// 不支持 getComputedStyle 
@@ -76,6 +77,8 @@ class CSSHandle {
         
         // 设置样式
 		setStyle(elem, style, value) {
+			// 通用方法
+			elem.style.cssText += ';' + (style + ":" + value);
 			// 如果是设置 opacity ，需要特殊处理
 			if (style == "opacity") {
 
@@ -93,10 +96,8 @@ class CSSHandle {
 				} else {
 					value = "alpha(opacity=" + value * 100 + ")"
 				}
+				elem.style.cssText += ';' + (style + ":" + value);
 			}
-
-			// 通用方法
-			elem.style.cssText += ';' + (style + ":" + value);
 		}
 }
 
