@@ -9,6 +9,14 @@ js基础封装库
     })
 ```
 
+设置滚动高度scrollTop
+
+```
+ animate(document.documentElement || document.body,{scrollTop: 400},function (){
+        console.log('动画完成');
+    })
+```
+
 
 ## 参考
 
