@@ -131,8 +131,6 @@ export default function animate(obj,json,mode,duration,fn){
                 if(speed < 0 && speed < json[attr]) {
                     speed = json[attr]
                 }
-                // 时间增加
-                t += 1000/60;  
             }
             
             //3检测停止,没有判断所有的都到达终点
@@ -161,6 +159,8 @@ export default function animate(obj,json,mode,duration,fn){
                 console.timeEnd('timeTaken');
             } 
         } else {
+            // 时间增加
+            t += 1000/60;  
             obj.timer = requestAnimationFrame(step);
         }
     }
