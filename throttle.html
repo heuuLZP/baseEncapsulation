@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>节流</title>
+</head>
+<body>
+        <p>throttle节流：无限滚动，在滚动期间每隔一定的时间段去响应判断滚动条是否已经到达底部。</p>
+        <p>使用场景:</p>
+        <p>通过设置定时器，让高频连续触发的事件每隔一定的时间长度之后再做出响应，以规律的时间间隔去执行</p>
+        <div id="common"></div>
+        <div id="special"></div>
+</body>
+<script>
+     let common = document.getElementById('common');     // 获取页面的左边
+    let special = document.getElementById('special');   // 获取页面的右边
+
+    function throttle (fn, delay,mustRunDelay,context) {
+        let startTime, timestamp, timer;
+        return function () {
+            timestamp = +new Date();  // 设置开始的时间
+            clearTimeout(timer);
+            if(!startTime) {
+                startTime = timestamp
+            }
+            if (timestamp - startTime >= mustRunDelay) {
+                fn.apply(context)
+                startTime = timestamp
+            } else {
+                timer = setTimeout(function (){
+                    fn.apply(context)
+                },delay)
+            }
+        }
+    }
+
+    let middle = throttle(commonWay, 1000, 500)
+    window.addEventListener('resize', function (){
+        middle()
+    })
+
+    function commonWay () {
+        common.innerHTML += '<li>k</li>'
+    }
+</script>
+</html>
