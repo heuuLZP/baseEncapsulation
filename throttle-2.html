@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>无限滚动，节流</title>
+    <style>
+        .scroll {
+            width: 150px;
+            height:150px;
+            background: pink;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="infinitScroll" id="list">
+        <div class="scroll"></div>
+        <div class="scroll"></div>
+        <div class="scroll"></div>
+        <div class="scroll"></div>
+        <div class="scroll"></div>
+        <div class="scroll"></div>
+</body>
+<script>
+    let myContainer = document.getElementById('list');
+
+    function fetchdata () {
+        let Odiv = '<div class="scroll"></div>'
+        let result = ''
+        for (let i = 0; i < 5; i++) {
+            result += Odiv;
+        }
+        return result;
+    }
+
+    function throttle (fn, delay,mustRunDelay,context) {
+        let startTime, timestamp, timer;
+        return function () {
+            timestamp = +new Date();  // 设置开始的时间
+            clearTimeout(timer);
+            if(!startTime) {
+                startTime = timestamp
+            }
+            if (timestamp - startTime >= mustRunDelay) {
+                fn.apply(context)
+                startTime = timestamp
+            } else {
+                timer = setTimeout(function (){
+                    fn.apply(context)
+                },delay)
+            }
+        }
+    }
+
+    function cal_set () {
+        let pixelsFromWindowBottomToBottom = document.body.scrollHeight - document.body.scrollTop - document.body.clientHeight;
+        if (pixelsFromWindowBottomToBottom < 300){
+            myContainer.innerHTML += fetchdata()
+        }
+        console.log('触发此时统计');
+        
+    }
+
+    window.onscroll = throttle(cal_set, 300,150)   // 滚动监听
+    // window.onscroll = cal_set   // 不加节流时
+</script>
+</html>
