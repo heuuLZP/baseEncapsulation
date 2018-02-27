@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>防抖和节流</title>
+</head>
+<body>
+    <p>debounce防抖：通过设置定时器，让高频触发的事件在触发结束之后再做出相关响应。只执行一次。</p>
+    <p>使用场景:</p>
+    <p>resize、scroll、用户点击按钮提交ajax请求的时候。</p>
+    <div id="common"></div>
+    <div id="special"></div>
+</body>
+<script>
+    /**
+     * 
+     * 版本一
+     */
+
+   /*  let common = document.getElementById('common');     // 获取页面的左边
+    let special = document.getElementById('special');   // 获取页面的右边
+    // 执行debounce
+    window.onresize = function () {
+        debounce(addlist, 300);  // 设置了防抖
+        commonWay();   // 普通的函数执行
+    }
+
+    function debounce(fn,delay) {
+        clearTimeout(fn.timeid);
+        fn.timeid = setTimeout(function() {
+            fn()
+        },delay)
+    }
+
+    function addlist () {
+        special.innerHTML += '<li>debounce</li>';
+    }
+    function commonWay () {
+        common.innerHTML += '<li>k</li>'
+    } */
+</script>
+<script>
+    /**
+     * 
+     * 版本二
+     */
+     let common = document.getElementById('common');     // 获取页面的左边
+    let special = document.getElementById('special');   // 获取页面的右边
+
+    let middle = debounce(addlist, 300);
+
+    // 执行debounce
+    window.addEventListener('resize',function (){
+        middle()
+        commonWay();   // 普通的函数执行
+    })
+
+    function debounce(fn,delay) {
+        let timeid; // 设置一个定时器
+        return function () {
+            clearTimeout(timeid);
+            timeid = setTimeout(function() {
+                fn()
+            },delay)
+        }
+    }
+
+    function addlist () {
+        special.innerHTML += '<li>debounce</li>';
+    }
+    function commonWay () {
+        common.innerHTML += '<li>k</li>'
+    }
+</script>
+</html>
